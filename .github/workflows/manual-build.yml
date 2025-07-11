@@ -1,7 +1,7 @@
 name: Manual PlatformIO Build
 
 on:
-  workflow_dispatch: # Allows manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,9 +21,15 @@ jobs:
       - name: Build firmware
         run: platformio run
 
+      - name: Create Release folder
+        run: mkdir -p Release
+
+      - name: Copy firmware to Release folder
+        run: |
+          find .pio/build -name "firmware.bin" -exec cp {} Release/ \;
+
       - name: Upload firmware artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: |
-            .pio/build/**/firmware.bin
+          path: Release/firmware.bin
