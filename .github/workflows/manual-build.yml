@@ -26,10 +26,14 @@ jobs:
 
       - name: Copy firmware to Release folder
         run: |
-          find .pio/build -name "firmware.bin" -exec cp {} Release/ \;
+          mkdir -p Release
+          find . -type f -name "firmware.bin" -exec cp {} Release/ \;
+
+      - name: List contents of Release folder
+        run: ls -l Release
 
       - name: Upload firmware artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: Release/firmware.bin
+          path: Release/
