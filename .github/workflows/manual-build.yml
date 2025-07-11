@@ -1,4 +1,4 @@
-name: Manual PlatformIO Build
+name: Build and Release Firmware
 
 on:
   workflow_dispatch:
@@ -21,19 +21,16 @@ jobs:
       - name: Build firmware
         run: platformio run
 
-      - name: Create Release folder
-        run: mkdir -p Release
-
       - name: Copy firmware to Release folder
         run: |
           mkdir -p Release
-          find . -type f -name "firmware.bin" -exec cp {} Release/ \;
+          find .pio/build -name "firmware.bin" -exec cp {} Release/ \;
 
-      - name: List contents of Release folder
-        run: ls -l Release
-
-      - name: Upload firmware artifact
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release and Upload Firmware
+        uses: softprops/action-gh-release@v2
         with:
-          name: firmware
-          path: Release/
+          tag_name: v${{ github.run_number }}
+          name: Firmware v${{ github.run_number }}
+          files: Release/firmware.bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
