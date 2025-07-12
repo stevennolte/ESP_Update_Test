@@ -27,7 +27,7 @@ jobs:
           find .pio/build -name "firmware.bin" -exec cp {} Release/ \;
 
       - name: Copy firmware.json to Release folder
-        run: cp path/to/firmware.json Release/
+        run: cp Release/firmware.json Release/
 
       - name: Create GitHub Release and Upload Firmware
         uses: softprops/action-gh-release@v2
