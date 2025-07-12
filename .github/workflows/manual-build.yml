@@ -29,6 +29,9 @@ jobs:
       - name: Copy firmware.json to Release folder
         run: cp firmware.json Release/
 
+      - name: Increment firmware.json version
+        run: python increment_version.py
+
       - name: Create GitHub Release and Upload Firmware
         uses: softprops/action-gh-release@v2
         with:
