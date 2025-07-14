@@ -12,7 +12,7 @@ with open("firmware.json", "w") as f:
     json.dump(data, f, indent=2)
 
 # Update main.cpp
-with open("main.cpp", "r") as f:
+with open("src/main.cpp", "r") as f:
     content = f.read()
 
 # Replace a line like: const int VERSION = ...;
