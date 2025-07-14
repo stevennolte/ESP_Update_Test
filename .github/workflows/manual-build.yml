@@ -26,9 +26,9 @@ jobs:
           mkdir -p Release
           find .pio/build -name "firmware.bin" -exec cp {} Release/ \;
 
-      - name: Increment firmware.json version
-        run: python increment_version.py
-        
+      - name: Update version in firmware.json and main.cpp
+        run: python set_version.py ${{ github.run_number }}
+
       - name: Copy firmware.json to Release folder
         run: cp firmware.json Release/
 
